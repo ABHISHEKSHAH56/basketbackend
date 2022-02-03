@@ -1,0 +1,97 @@
+const mongoose = require("mongoose");
+
+const productSchema = mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, "Please Enter product Name"],
+    trim: true,
+  },
+  description: {
+    type: String,
+    required: [true, "Please Enter product Description"],
+  },
+  englishName:{
+    type: String,
+    required: [true, "Please Enter product English  Name"],
+    trim: true,
+
+  },
+price:{
+        type: Number,
+        required: [true, "Please Enter product Price"],
+        maxLength: [8, "Price cannot exceed 8 characters"],
+
+      },
+measurment:{
+        type:String,
+        default:"Kg"
+      },
+Stock: {
+        type: Number,
+        required: [true, "Please Enter product Stock"],
+        maxLength: [4, "Stock cannot exceed 4 characters"],
+        default: 1,
+      }
+,
+images: [
+    {
+      public_id: {
+        type: String,
+        required: true,
+      },
+      url: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
+  category: {
+    type: String,
+    required: [true, "Please Enter Product Category"],
+  },
+  
+  numOfReviews: {
+    type: Number,
+    default: 0,
+  },
+  reviews: [
+    {
+      user: {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+        required: true,
+      },
+      name: {
+        type: String,
+        required: true,
+      },
+      rating: {
+        type: Number,
+        required: true,
+      },
+      comment: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
+  user:{
+      type:mongoose.Schema.ObjectId,
+      ref:"User",
+      require :true
+  },
+  tag:{
+    type:String
+  },
+  qty:{
+    type:Number,
+  },
+
+  
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+module.exports = mongoose.model("Product", productSchema);
